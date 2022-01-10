@@ -29,8 +29,11 @@ public class Main {
                 createFile();
             } else if (menuOption == 2) {
                 writeToFile(books);
-            } else if (menuOption == 3) {
+            } else if (menuOption == 4) {
                 break;
+            }else if (menuOption==3){
+                writeToUserFile();
+
             }
 
         }
@@ -80,7 +83,8 @@ public class Main {
         System.out.println("Select an Option 1-3:");
         System.out.println("1) Create File");
         System.out.println("2) Write Book Details to File");
-        System.out.println("3) Quit Program");
+        System.out.println("3) Create New User");
+        System.out.println("4) Quit Program");
         int menuOption = scanner.nextInt();
         return menuOption;
     }
@@ -136,6 +140,25 @@ public class Main {
             FileWriter myWriter = new FileWriter("bookfile.txt");
             //myWriter.write(String.valueOf(bookList));
             myWriter.write(String.valueOf(books));
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error has occurred.");
+            e.printStackTrace();
+        }
+    }
+    public static String getUserDetails() {
+
+        String userName = getInput("enter username");
+        String userPassword = getInput("Enter password");
+
+        return (userName + "," + userPassword);
+
+    }
+    public static void writeToUserFile() {
+        try {
+            FileWriter myWriter = new FileWriter("users.txt");
+            //myWriter.write(String.valueOf(bookList));
+            myWriter.write(getUserDetails());
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error has occurred.");
