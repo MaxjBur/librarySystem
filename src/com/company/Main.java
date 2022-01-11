@@ -10,18 +10,15 @@ import java.io.File;
 // good variable names, nice ☺
 public class Main {
     private static ArrayList<String> books = new ArrayList<>();
+    private static ArrayList<String> users = new ArrayList<>();
+    private static File fileObj = new File("bookfile.txt");
 
     //I need to find the text file and make sure it works
     public static void main(String[] args) {
         login();
-        int numOfBooks = numOfBooks();
+        readBookFile();
+        System.out.println(books);
 
-
-        for (int i = 0; i < numOfBooks; i++) {
-            books.add(getBookDetails());
-            System.out.println(books);
-
-        }
         int menuOption;
         while (true) {
             menuOption = menu();
@@ -29,13 +26,23 @@ public class Main {
                 createFile();
             } else if (menuOption == 2) {
                 writeToFile(books);
-            } else if (menuOption == 4) {
+            } else if (menuOption == 5) {
                 break;
             }else if (menuOption==3){
                 writeToUserFile();
 
             }
+            else if (menuOption==4)
+            {
+                int numOfBooks = numOfBooks();
 
+
+                for (int i = 0; i < numOfBooks; i++) {
+                    books.add(getBookDetails());
+                    System.out.println(books);
+
+                }
+            }
         }
 
     }
@@ -84,7 +91,8 @@ public class Main {
         System.out.println("1) Create File");
         System.out.println("2) Write Book Details to File");
         System.out.println("3) Create New User");
-        System.out.println("4) Quit Program");
+        System.out.println("4) Add New Books");
+        System.out.println("5) Quit Program");
         int menuOption = scanner.nextInt();
         return menuOption;
     }
@@ -113,7 +121,7 @@ public class Main {
 
     public static void createFile() {
         try {
-            File fileObj = new File("bookfile.txt");
+
             if (fileObj.createNewFile()) {
                 System.out.println("File created: " + fileObj.getName());
             } else {
@@ -164,5 +172,20 @@ public class Main {
             System.out.println("An error has occurred.");
             e.printStackTrace();
         }
+    }
+    public static ArrayList readBookFile(){
+        try {
+            Scanner fileReader = new Scanner(fileObj);
+            while (fileReader.hasNextLine()){
+                String tempBooks = fileReader.nextLine();
+                books.add(tempBooks);
+
+            }
+        }catch (Exception e){
+            System.out.println("An error has occurred");
+            e.printStackTrace();
+
+        }
+        return users;
     }
 }
