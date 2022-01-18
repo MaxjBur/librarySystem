@@ -9,25 +9,30 @@ import java.io.File;
 
 // good variable names, nice ☺
 public class Main {
-    private static ArrayList<String> books = new ArrayList<>();
-    private static ArrayList<String> users = new ArrayList<>();
+    private static ArrayList<String> bookFile = new ArrayList<>();
+    private static ArrayList<String> usersFile = new ArrayList<>();
     private static File fileObj = new File("bookfile.txt");
 
     //I need to find the text file and make sure it works
     public static void main(String[] args) {
         login();
+         //bookFile=(readBookFile());
+        System.out.println(bookFile);
         readBookFile();
-        System.out.println(books);
+        readUserFile();
 
         int menuOption;
         while (true) {
             menuOption = menu();
             if (menuOption == 1) {
                 createFile();
+
+
             } else if (menuOption == 2) {
-                writeToFile(books);
-            } else if (menuOption == 5) {
+                writeToFile(bookFile);
+                writeToUserFile(usersFile);
                 break;
+
             }else if (menuOption==3){
                 writeToUserFile();
 
@@ -38,8 +43,9 @@ public class Main {
 
 
                 for (int i = 0; i < numOfBooks; i++) {
-                    books.add(getBookDetails());
-                    System.out.println(books);
+                    bookFile.add(getBookDetails());
+                    System.out.println(bookFile);
+
 
                 }
             }
@@ -143,11 +149,11 @@ public class Main {
         }
     }
 
-    public static void writeToFile(ArrayList<String> bookList) {
+    public static void writeToFile(ArrayList<String> bookFile) {
         try {
             FileWriter myWriter = new FileWriter("bookfile.txt");
             //myWriter.write(String.valueOf(bookList));
-            myWriter.write(String.valueOf(books));
+            myWriter.write(String.valueOf(bookFile));
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error has occurred.");
@@ -164,7 +170,7 @@ public class Main {
     }
     public static void writeToUserFile() {
         try {
-            FileWriter myWriter = new FileWriter("users.txt");
+            FileWriter myWriter = new FileWriter("users.txt");  //I need to change this so it can get new user details and add it to the text file in separate methods.
             //myWriter.write(String.valueOf(bookList));
             myWriter.write(getUserDetails());
             myWriter.close();
@@ -173,12 +179,15 @@ public class Main {
             e.printStackTrace();
         }
     }
+    public static void newUser(){ //finish
+
+    }
     public static ArrayList readBookFile(){
         try {
             Scanner fileReader = new Scanner(fileObj);
             while (fileReader.hasNextLine()){
                 String tempBooks = fileReader.nextLine();
-                books.add(tempBooks);
+                bookFile.add(tempBooks);
 
             }
         }catch (Exception e){
@@ -186,6 +195,21 @@ public class Main {
             e.printStackTrace();
 
         }
-        return users;
+        return bookFile;
+    }
+    public static ArrayList readUserFile(){
+        try {
+            Scanner fileReader = new Scanner(fileObj);
+            while (fileReader.hasNextLine()){
+                String tempUsers = fileReader.nextLine();
+                usersFile.add(tempUsers);
+
+            }
+        }catch (Exception e){
+            System.out.println("An error has occurred");
+            e.printStackTrace();
+
+        }
+        return usersFile;
     }
 }
