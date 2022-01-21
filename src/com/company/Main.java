@@ -12,11 +12,12 @@ public class Main {
     private static ArrayList<String> bookFile = new ArrayList<>();
     private static ArrayList<String> usersFile = new ArrayList<>();
     private static File fileObj = new File("bookfile.txt");
+    private static File fileObji = new File("users.txt");
 
-    //I need to find the text file and make sure it works
+
     public static void main(String[] args) {
         login();
-         //bookFile=(readBookFile());
+
         System.out.println(bookFile);
         readBookFile();
         readUserFile();
@@ -30,11 +31,12 @@ public class Main {
 
             } else if (menuOption == 2) {
                 writeToFile(bookFile);
-                writeToUserFile(usersFile);
+                writeToUserFile();
+
                 break;
 
             }else if (menuOption==3){
-                writeToUserFile();
+                newUser();
 
             }
             else if (menuOption==4)
@@ -95,10 +97,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select an Option 1-3:");
         System.out.println("1) Create File");
-        System.out.println("2) Write Book Details to File");
+        System.out.println("2) Quit");
         System.out.println("3) Create New User");
         System.out.println("4) Add New Books");
-        System.out.println("5) Quit Program");
         int menuOption = scanner.nextInt();
         return menuOption;
     }
@@ -111,7 +112,7 @@ public class Main {
     }
 
     public static String getBookDetails() {
-        int bookIsbn = Integer.parseInt(getInput("Enter book ISBN"));
+        String bookIsbn = (getInput("Enter book ISBN"));
         String bookName = getInput("Enter book name");
         String bookAuthor = getInput("Enter author");
         String bookGenre = getInput("Enter genre");
@@ -142,7 +143,7 @@ public class Main {
 
             }
         } catch (IOException e) {
-            System.out.println("An error occurred."); // show which error
+            System.out.println("An error occurred.");
             e.printStackTrace();
 
 
@@ -160,19 +161,12 @@ public class Main {
             e.printStackTrace();
         }
     }
-    public static String getUserDetails() {
 
-        String userName = getInput("enter username");
-        String userPassword = getInput("Enter password");
-
-        return (userName + "," + userPassword);
-
-    }
     public static void writeToUserFile() {
         try {
-            FileWriter myWriter = new FileWriter("users.txt");  //I need to change this so it can get new user details and add it to the text file in separate methods.
+            FileWriter myWriter = new FileWriter("users.txt");
             //myWriter.write(String.valueOf(bookList));
-            myWriter.write(getUserDetails());
+            myWriter.write(String.valueOf(usersFile));
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error has occurred.");
@@ -180,6 +174,9 @@ public class Main {
         }
     }
     public static void newUser(){ //finish
+        String userName = getInput("enter username");
+        String userPassword = getInput("Enter password");
+        usersFile.add(userName + "," + userPassword);
 
     }
     public static ArrayList readBookFile(){
@@ -199,7 +196,7 @@ public class Main {
     }
     public static ArrayList readUserFile(){
         try {
-            Scanner fileReader = new Scanner(fileObj);
+            Scanner fileReader = new Scanner(fileObji);
             while (fileReader.hasNextLine()){
                 String tempUsers = fileReader.nextLine();
                 usersFile.add(tempUsers);
